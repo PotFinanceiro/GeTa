@@ -186,6 +186,7 @@ function sR(userId) {
 
     // Renderiza a aplicação
     rA();
+    
 
     // Mensagem de boas-vindas
     tM('Bem-vindo(a), ' + cu.nm + '!', 'success');
