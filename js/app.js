@@ -1,4 +1,12 @@
 /* ====== TEMAS ====== */
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm";
+
+const supabase = createClient(
+  "https://SEU-PROJECT-URL.supabase.co",
+  "SUA-PUBLISHABLE-KEY"
+);
+
+
 const TH={
 claro:{n:'Claro',v:{'--bg':'#f4f5f9','--bg2':'#fff','--crd':'#fff','--crd2':'#f0f1f5','--bdr':'#dde0e8','--fg':'#1a1d2b','--fg2':'#6b7490','--ac':'#d08a10','--ac2':'rgba(208,138,16,.12)','--ac3':'#b87808','--ok':'#16a34a','--ok2':'rgba(22,163,74,.1)','--nf':'#0ea5e9','--nf2':'rgba(14,165,233,.1)','--er':'#dc2626','--er2':'rgba(220,38,38,.1)','--wr':'#ca8a04','--mt':'#94a3b8','--mt2':'rgba(148,163,184,.1)','--gb':'rgba(255,255,255,.88)','--s1':'0 8px 30px rgba(0,0,0,.08)','--s2':'0 2px 8px rgba(0,0,0,.06)','--ib':'#f4f5f9','--af':'#fff'}},
 escuro:{n:'Escuro',v:{'--bg':'#0d1017','--bg2':'#131720','--crd':'#1a1f2e','--crd2':'#212740','--bdr':'#2a3048','--fg':'#e4e7ef','--fg2':'#8891a8','--ac':'#e8a020','--ac2':'rgba(232,160,32,.15)','--ac3':'#d08a10','--ok':'#34d399','--ok2':'rgba(52,211,153,.15)','--nf':'#38bdf8','--nf2':'rgba(56,189,248,.15)','--er':'#f87171','--er2':'rgba(248,113,113,.15)','--wr':'#fbbf24','--mt':'#6b7490','--mt2':'rgba(107,116,144,.15)','--gb':'rgba(26,31,46,.85)','--s1':'0 8px 30px rgba(0,0,0,.4)','--s2':'0 2px 8px rgba(0,0,0,.3)','--ib':'#131720','--af':'#0d1017'}},
@@ -46,70 +54,70 @@ function tM(m,tp='success'){const c=document.getElementById('tk');const cl={succ
 function pH(tk,sh){const p=cP(tk);const sm2=SM[tk.s];const od=iO(tk);let h='<div><div class="flex items-center gap-2" style="min-width:100px"><div class="flex-1 h-1.5 rounded-full" style="background:var(--bdr)"><div class="h-1.5 rounded-full" style="width:'+p+'%;background:'+(od?'var(--er)':sm2.c)+'"></div></div><span class="text-xs font-semibold" style="width:30px;color:'+(od?'var(--er)':'var(--fg2)')+'">'+p+'%</span></div>';if(sh&&od)h+='<div class="ow"><i class="fas fa-exclamation-circle"></i> Tarefa não concluída</div>';h+='</div>';return h}
 
 /* ====== LOGIN ====== */
-function rL() {
-  const cl = gC();
-  document.getElementById('app').innerHTML = `
-    <div class="logbg h-screen flex items-center justify-center p-4 overflow-auto">
-      <div class="w-full max-w-md py-6">
-        <div class="text-center mb-6 su2">
-          <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" 
-               style="background:var(--ac2);border:1px solid rgba(232,160,32,.3)">
-            <i class="fas fa-diagram-project text-xl" style="color:var(--ac)"></i>
-          </div>
-          <h1 class="text-3xl font-bold tracking-tight mb-2">GeTa</h1>
-          <p style="color:var(--fg2)">Gerenciador de tarefas</p>
-        </div>
-
-        <div class="gl rounded-xl p-5 su2" style="animation-delay:.1s">
-          <h2 class="font-semibold mb-4">Acesso ao sistema</h2>
-          <form onsubmit="event.preventDefault();fL()">
-            <input id="email" type="email" autocomplete="username" placeholder="seu@email.com"
-       class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
-       style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
-
-
-            <label class="text-xs font-medium block mb-1">Senha</label>
-            <input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"
-                   class="w-full mb-2 px-3 py-2 rounded-lg text-sm"
-                   style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
-
-            <div id="lemsg" class="text-xs mb-3" style="display:none;color:var(--er)">
-              Sua senha ou login estão incorretos
+  function rL() {
+    const cl = gC();
+    document.getElementById('app').innerHTML = `
+      <div class="logbg h-screen flex items-center justify-center p-4 overflow-auto">
+        <div class="w-full max-w-md py-6">
+          <div class="text-center mb-6 su2">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" 
+                style="background:var(--ac2);border:1px solid rgba(232,160,32,.3)">
+              <i class="fas fa-diagram-project text-xl" style="color:var(--ac)"></i>
             </div>
+            <h1 class="text-3xl font-bold tracking-tight mb-2">GeTa</h1>
+            <p style="color:var(--fg2)">Gerenciador de tarefas</p>
+          </div>
 
-            <div class="text-right mb-4">
-              <button type="button" onclick="fS()" class="text-xs" style="color:var(--ac)">
-                Esqueceu a senha?
+          <div class="gl rounded-xl p-5 su2" style="animation-delay:.1s">
+            <h2 class="font-semibold mb-4">Acesso ao sistema</h2>
+            <form onsubmit="event.preventDefault();fL()">
+              <input id="email" type="email" autocomplete="username" placeholder="seu@email.com"
+        class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
+        style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+
+
+              <label class="text-xs font-medium block mb-1">Senha</label>
+              <input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"
+                    class="w-full mb-2 px-3 py-2 rounded-lg text-sm"
+                    style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+
+              <div id="lemsg" class="text-xs mb-3" style="display:none;color:var(--er)">
+                Sua senha ou login estão incorretos
+              </div>
+
+              <div class="text-right mb-4">
+                <button type="button" onclick="fS()" class="text-xs" style="color:var(--ac)">
+                  Esqueceu a senha?
+                </button>
+              </div>
+
+              <button type="submit" class="bp w-full py-2.5 rounded-lg font-semibold text-sm">
+                Entrar
               </button>
+            </form>
+
+            <div class="flex items-center gap-3 my-4">
+              <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
+              <span class="text-xs" style="color:var(--mt)">ou</span>
+              <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
             </div>
 
-            <button type="submit" class="bp w-full py-2.5 rounded-lg font-semibold text-sm">
-              Entrar
+            <button type="button" onclick="gL()" 
+                    class="w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2"
+                    style="background:var(--crd);border:1px solid var(--bdr)">
+              <i class="fab fa-google" style="color:#4285f4"></i> Entrar com Google (Gmail)
             </button>
-          </form>
-
-          <div class="flex items-center gap-3 my-4">
-            <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
-            <span class="text-xs" style="color:var(--mt)">ou</span>
-            <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
           </div>
-
-          <button type="button" onclick="gL()" 
-                  class="w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2"
-                  style="background:var(--crd);border:1px solid var(--bdr)">
-            <i class="fab fa-google" style="color:#4285f4"></i> Entrar com Google (Gmail)
-          </button>
         </div>
       </div>
-    </div>
-  `;
-}
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    `;
+  }
+  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
 // Inicializa o cliente Supabase com suas credenciais reais
 const supabase = createClient(
-  "https://SEU-PROJECT-URL.supabase.co",   // coloque seu SUPABASE_URL
-  "SEU-PUBLISHABLE-KEY"                    // coloque seu SUPABASE_KEY
+  "https://iyrjxkiaippfouilapdb.supabase.co",   // coloque seu SUPABASE_URL
+  "b_publishable_AjyVwE-ZMvUJBzRvphFepQ_2F_X95q6"                    // coloque seu SUPABASE_KEY
 );
 
 async function fL() {
