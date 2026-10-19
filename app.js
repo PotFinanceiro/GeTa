@@ -209,6 +209,23 @@ function rV(){const t=document.getElementById('vt'),s=document.getElementById('v
 /* ====== DASHBOARD ====== */
 function rD(el){const al=iA()?TK:TK.filter(t=>t.ai===cu.id);const oc=al.filter(t=>iO(t)).length;const st={t:al.length,a:al.filter(t=>t.s==='em-andamento').length,c:al.filter(t=>t.s==='concluido').length};const av=al.length?Math.round(al.reduce((s,t)=>s+cP(t),0)/al.length):0;el.innerHTML='<div class="fi">'+(oc>0?'<div class="mb-4 p-3 rounded-lg flex items-center gap-3" style="background:var(--er2);border:1px solid rgba(248,113,113,.3)"><i class="fas fa-exclamation-triangle" style="color:var(--er)"></i><div><div class="font-semibold text-sm" style="color:var(--er)">'+oc+' tarefa'+(oc>1?'s':'')+' com prazo vencido</div><div class="text-xs" style="color:var(--fg2)">Edite as datas para liberar para a equipe</div></div></div>':'')+'<div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-5"><div class="sc rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><div class="text-xs" style="color:var(--fg2)">Total</div><div class="text-2xl font-bold mt-1">'+st.t+'</div></div><div class="sc rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><div class="text-xs" style="color:var(--fg2)">Em Andamento</div><div class="text-2xl font-bold mt-1" style="color:var(--ac)">'+st.a+'</div></div><div class="sc rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><div class="text-xs" style="color:var(--fg2)">Concluídas</div><div class="text-2xl font-bold mt-1" style="color:var(--ok)">'+st.c+'</div></div><div class="sc rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><div class="text-xs" style="color:var(--er)">Vencidas</div><div class="text-2xl font-bold mt-1" style="color:var(--er)">'+oc+'</div></div></div><div class="rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><h3 class="font-semibold text-sm mb-3">Tarefas Recentes</h3><div class="space-y-2">'+al.slice(0,6).map(t=>{const a=gU(t.ai);const sm2=SM[t.s];const tp2=TT[t.tp]||TT['manutencao'];return'<div class="flex items-center gap-2 p-2 rounded-lg cursor-pointer" onclick="oDM('+t.id+')" style="background:var(--mt2)"><div class="av" style="background:'+(a?a.co:'var(--mt)')+';color:var(--af);font-size:9px;width:24px;height:24px">'+(a?a.in:'?')+'</div><div class="flex-1 min-w-0"><div class="text-xs font-medium truncate">'+t.t+'</div><div class="text-xs" style="color:var(--fg2)">'+fD(t.sd)+' — '+fD(t.ed)+'</div></div><div class="tbadge" style="background:'+tp2.b+';color:'+tp2.c+'"><i class="fas '+tp2.i+'" style="font-size:8px"></i></div><div class="badge" style="background:'+sm2.b+';color:'+sm2.c+'">'+sm2.l+'</div></div>'}).join('')+'</div></div></div>'}
 
+/*==============IMPORT SUPABASE==============*/
+import { supabase } from './supabaseClient.js';
+
+async function login(email, password) {
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  });
+
+  if (error) {
+    alert('Erro no login: ' + error.message);
+  } else {
+    alert('Login bem-sucedido!');
+    console.log(data);
+  }
+}
+
 
 
 /* ====== TAREFAS ====== */
