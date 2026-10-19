@@ -1,10 +1,13 @@
 /* ====== SUPABASE ====== */
-// As chaves ficam em js/config.js (fora do Git)
+// As chaves ficam em config.js
 if (!window.APP_CONFIG) {
-  document.body.innerHTML = '<p style="padding:20px;font-family:sans-serif">Arquivo js/config.js não encontrado. Copie js/config.example.js para js/config.js e preencha as chaves.</p>';
-  throw new Error('js/config.js ausente');
+  document.body.innerHTML = '<p style="padding:20px;font-family:sans-serif">Arquivo config.js não encontrado. Configure as chaves do Supabase.</p>';
+  throw new Error('config.js ausente');
 }
-const sb = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_KEY);
+const sb = window.supabase.createClient(
+  window.APP_CONFIG.SUPABASE_URL,
+  window.APP_CONFIG.NEXT_PUBLIC_SUPABASE_ANON_KEY
+);
 
 /* ====== TEMAS ====== */
 const TH={
