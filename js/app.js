@@ -63,10 +63,10 @@ function rL() {
         <div class="gl rounded-xl p-5 su2" style="animation-delay:.1s">
           <h2 class="font-semibold mb-4">Acesso ao sistema</h2>
           <form onsubmit="event.preventDefault();fL()">
-            <label class="text-xs font-medium block mb-1">E-mail</label>
-            <input id="le" type="email" autocomplete="username" placeholder="seu@email.com"
-                   class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
-                   style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+            <input id="email" type="email" autocomplete="username" placeholder="seu@email.com"
+       class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
+       style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+
 
             <label class="text-xs font-medium block mb-1">Senha</label>
             <input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"
@@ -215,11 +215,150 @@ function rG(el){const vis=gV();if(!vis.length){el.innerHTML='<div class="flex fl
 function rE(el){const cl=gC();el.innerHTML='<div class="fi"><div class="flex items-center justify-between mb-4"><span class="text-xs" style="color:var(--fg2)">'+cl.length+' membro'+(cl.length!==1?'s':'')+'</span><button onclick="oNM()" class="bp flex items-center gap-1 text-xs"><i class="fas fa-user-plus" style="font-size:10px"></i> Novo Membro</button></div><div class="grid md:grid-cols-2 xl:grid-cols-3 gap-3">'+cl.map(u=>{const ut=TK.filter(t=>t.ai===u.id);const cp=ut.filter(t=>t.s==='concluido').length;const ap=ut.length?Math.round(ut.reduce((s,t)=>s+cP(t),0)/ut.length):0;const td2=ut.reduce((s,t)=>s+t.du,0);return'<div class="sc rounded-lg p-4" style="background:var(--crd);border:1px solid var(--bdr)"><div class="flex items-start justify-between mb-3"><div class="flex items-center gap-2"><div class="av" style="background:'+u.co+';color:var(--af);width:38px;height:38px;font-size:13px">'+u.in+'</div><div><div class="font-semibold text-sm">'+u.nm+'</div><div class="badge mt-0.5" style="background:'+(ALB[u.al]||'var(--mt2)')+';color:'+(ALC[u.al]||'var(--mt)')+'">'+u.al+'</div></div></div><div class="flex items-center gap-0.5"><button onclick="oEM2(\''+u.id+'\')" class="p-1 rounded hover:bg-white/5"><i class="fas fa-pen text-xs" style="color:var(--ac)"></i></button><button onclick="dM(\''+u.id+'\')" class="p-1 rounded hover:bg-white/5"><i class="fas fa-trash text-xs" style="color:var(--er)"></i></button></div></div><div class="space-y-1.5 mb-3 pb-3" style="border-bottom:1px solid var(--bdr)"><div class="flex items-center gap-2 text-xs"><i class="fas fa-envelope w-3.5 text-center" style="font-size:9px;color:var(--mt)"></i><span style="color:var(--fg2)">'+u.em+'</span></div><div class="flex items-center gap-2 text-xs"><i class="fas fa-phone w-3.5 text-center" style="font-size:9px;color:var(--mt)"></i><span style="color:var(--fg2)">'+u.ph+'</span></div></div><div class="grid grid-cols-3 gap-1.5 mb-3"><div class="text-center p-1.5 rounded" style="background:var(--bg2)"><div class="text-base font-bold" style="color:var(--ac)">'+ut.length+'</div><div class="text-xs" style="color:var(--mt)">Taref.</div></div><div class="text-center p-1.5 rounded" style="background:var(--bg2)"><div class="text-base font-bold" style="color:var(--ok)">'+cp+'</div><div class="text-xs" style="color:var(--mt)">Feitas</div></div><div class="text-center p-1.5 rounded" style="background:var(--bg2)"><div class="text-base font-bold" style="color:var(--nf)">'+td2+'d</div><div class="text-xs" style="color:var(--mt)">Dur.</div></div></div><div><div class="flex justify-between text-xs mb-1"><span style="color:var(--fg2)">Progresso</span><span class="font-semibold">'+ap+'%</span></div><div class="h-1.5 rounded-full" style="background:var(--bdr)"><div class="h-1.5 rounded-full pbf" style="width:'+ap+'%;background:'+u.co+'"></div></div></div></div>'}).join('')+'</div></div>'}
 
 /* ====== MODAIS MEMBRO ====== */
-function oNM(){const m=document.getElementById('mbd'),b=document.getElementById('mbo');b.innerHTML='<div class="p-5"><div class="flex justify-between mb-4"><h2 class="font-bold"><i class="fas fa-user-plus mr-1" style="color:var(--ac)"></i>Novo Membro</h2><button onclick="cM2()" class="p-1 rounded hover:bg-white/5"><i class="fas fa-times" style="color:var(--mt)"></i></button></div><form onsubmit="return hNM(event)"><div class="mb-3"><label class="fl">Nome</label><input type="text" id="mn" required class="fi2"></div><div class="fr mb-3"><div><label class="fl">E-mail</label><input type="email" id="me" required class="fi2"></div><div><label class="fl">Telefone</label><input type="tel" id="mp" required class="fi2"></div></div><div class="mb-3"><label class="fl">Nível de Acesso</label><select id="ma" required class="fi2">'+AL.map(l=>'<option value="'+l+'">'+l+'</option>').join('')+'</select></div><div class="flex gap-2 pt-2"><button type="submit" class="bp flex-1">Adicionar</button><button type="button" onclick="cM2()" class="bs flex-1">Cancelar</button></div></form></div>';m.style.display='flex'}
-function hNM(e){e.preventDefault();const nm=document.getElementById('mn').value.trim(),em=document.getElementById('me').value.trim(),ph=document.getElementById('mp').value.trim(),al=document.getElementById('ma').value;if(!nm||!em)return false;U.push({id:'col'+(nU++),nm,rl:'col',in:gI(nm),co:CP[(U.length-1)%CP.length],ph,em,al});cM2();rV();tM('"'+nm+'" adicionado','success');return false}
-function oEM2(uid){const u=gU(uid);if(!u)return;const m=document.getElementById('mbd'),b=document.getElementById('mbo');b.innerHTML='<div class="p-5"><div class="flex justify-between mb-4"><h2 class="font-bold"><i class="fas fa-user-pen mr-1" style="color:var(--ac)"></i>Editar Membro</h2><button onclick="cM2()" class="p-1 rounded hover:bg-white/5"><i class="fas fa-times" style="color:var(--mt)"></i></button></div><form onsubmit="return hEM(event,\''+u.id+'\')"><div class="mb-3"><label class="fl">Nome</label><input type="text" id="en" required value="'+u.nm+'" class="fi2"></div><div class="fr mb-3"><div><label class="fl">E-mail</label><input type="email" id="ee" required value="'+u.em+'" class="fi2"></div><div><label class="fl">Telefone</label><input type="tel" id="ep" required value="'+u.ph+'" class="fi2"></div></div><div class="mb-3"><label class="fl">Nível</label><select id="ea" required class="fi2">'+AL.map(l=>'<option value="'+l+'" '+(l===u.al?'selected':'')+'>'+l+'</option>').join('')+'</select></div><div class="flex gap-2 pt-2"><button type="submit" class="bp flex-1">Salvar</button><button type="button" onclick="cM2()" class="bs flex-1">Cancelar</button></div></form></div>';m.style.display='flex'}
-function hEM(e,uid){e.preventDefault();const u=gU(uid);if(!u)return false;u.nm=document.getElementById('en').value.trim();u.em=document.getElementById('ee').value.trim();u.ph=document.getElementById('ep').value.trim();u.al=document.getElementById('ea').value;u.in=gI(u.nm);cM2();rV();tM('"'+u.nm+'" atualizado','success');return false}
-function dM(uid){const u=gU(uid);if(!u)return;const m=document.getElementById('mbd'),b=document.getElementById('mbo');b.innerHTML='<div class="p-5"><h2 class="font-bold mb-3">Remover '+u.nm+'?</h2><div class="flex gap-2"><button onclick="U=U.filter(x=>x.id!==\''+uid+'\');cM2();rV();tM(\'Removido\',\'warning\')" class="bd flex-1">Remover</button><button onclick="cM2()" class="bs flex-1">Cancelar</button></div></div>';m.style.display='flex'}
+function oNM() {
+  const m = document.getElementById('mbd'),
+        b = document.getElementById('mbo');
+  b.innerHTML = `
+    <div class="p-5">
+      <div class="flex justify-between mb-4">
+        <h2 class="font-bold">
+          <i class="fas fa-user-plus mr-1" style="color:var(--ac)"></i>Novo Membro
+        </h2>
+        <button onclick="cM2()" class="p-1 rounded hover:bg-white/5">
+          <i class="fas fa-times" style="color:var(--mt)"></i>
+        </button>
+      </div>
+      <form onsubmit="return hNM(event)">
+        <div class="mb-3">
+          <label class="fl">Nome</label>
+          <input type="text" id="mn" required class="fi2">
+        </div>
+        <div class="fr mb-3">
+          <div>
+            <label class="fl">E-mail</label>
+            <input type="email" id="email" required class="fi2">
+          </div>
+          <div>
+            <label class="fl">Telefone</label>
+            <input type="tel" id="mp" required class="fi2">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="fl">Nível de Acesso</label>
+          <select id="ma" required class="fi2">
+            ${AL.map(l => `<option value="${l}">${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="bp flex-1">Adicionar</button>
+          <button type="button" onclick="cM2()" class="bs flex-1">Cancelar</button>
+        </div>
+      </form>
+    </div>`;
+  m.style.display = 'flex';
+}
+function hNM(e) {
+  e.preventDefault();
+  const nm = document.getElementById('mn').value.trim(),
+        em = document.getElementById('email').value.trim(),
+        ph = document.getElementById('mp').value.trim(),
+        al = document.getElementById('ma').value;
+
+  if (!nm || !em) return false;
+
+  U.push({
+    id: 'col' + (nU++),
+    nm,
+    rl: 'col',
+    in: gI(nm),
+    co: CP[(U.length - 1) % CP.length],
+    ph,
+    em,
+    al
+  });
+
+  cM2();
+  rV();
+  tM('"' + nm + '" adicionado', 'success');
+  return false;
+}
+function oEM2(uid) {
+  const u = gU(uid);
+  if (!u) return;
+  const m = document.getElementById('mbd'),
+        b = document.getElementById('mbo');
+  b.innerHTML = `
+    <div class="p-5">
+      <div class="flex justify-between mb-4">
+        <h2 class="font-bold">
+          <i class="fas fa-user-pen mr-1" style="color:var(--ac)"></i>Editar Membro
+        </h2>
+        <button onclick="cM2()" class="p-1 rounded hover:bg-white/5">
+          <i class="fas fa-times" style="color:var(--mt)"></i>
+        </button>
+      </div>
+      <form onsubmit="return hEM(event,'${u.id}')">
+        <div class="mb-3">
+          <label class="fl">Nome</label>
+          <input type="text" id="en" required value="${u.nm}" class="fi2">
+        </div>
+        <div class="fr mb-3">
+          <div>
+            <label class="fl">E-mail</label>
+            <input type="email" id="email" required value="${u.em}" class="fi2">
+          </div>
+          <div>
+            <label class="fl">Telefone</label>
+            <input type="tel" id="ep" required value="${u.ph}" class="fi2">
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="fl">Nível</label>
+          <select id="ea" required class="fi2">
+            ${AL.map(l => `<option value="${l}" ${l === u.al ? 'selected' : ''}>${l}</option>`).join('')}
+          </select>
+        </div>
+        <div class="flex gap-2 pt-2">
+          <button type="submit" class="bp flex-1">Salvar</button>
+          <button type="button" onclick="cM2()" class="bs flex-1">Cancelar</button>
+        </div>
+      </form>
+    </div>`;
+  m.style.display = 'flex';
+}
+function hEM(e, uid) {
+  e.preventDefault();
+  const u = gU(uid);
+  if (!u) return false;
+
+  u.nm = document.getElementById('en').value.trim();
+  u.em = document.getElementById('email').value.trim();
+  u.ph = document.getElementById('ep').value.trim();
+  u.al = document.getElementById('ea').value;
+  u.in = gI(u.nm);
+
+  cM2();
+  rV();
+  tM('"' + u.nm + '" atualizado', 'success');
+  return false;
+}
+function dM(uid) {
+  const u = gU(uid);
+  if (!u) return;
+  const m = document.getElementById('mbd'),
+        b = document.getElementById('mbo');
+  b.innerHTML = `
+    <div class="p-5">
+      <h2 class="font-bold mb-3">Remover ${u.nm}?</h2>
+      <div class="flex gap-2">
+        <button onclick="U = U.filter(x => x.id !== '${uid}'); cM2(); rV(); tM('Removido','warning')" class="bd flex-1">
+          Remover
+        </button>
+        <button onclick="cM2()" class="bs flex-1">Cancelar</button>
+      </div>
+    </div>`;
+  m.style.display = 'flex';
+}
 
 /* ====== MODAL CRIAR TAREFA ====== */
 function oCM(){const m=document.getElementById('mbd'),b=document.getElementById('mbo');const tm=new Date();tm.setDate(tm.getDate()+1);const ft=d=>d.toISOString().split('T')[0];const cl=gC();b.innerHTML='<div class="p-5"><div class="flex justify-between mb-4"><h2 class="font-bold"><i class="fas fa-clipboard-list mr-1" style="color:var(--ac)"></i>Designar Tarefa</h2><button onclick="cM2()" class="p-1 rounded hover:bg-white/5"><i class="fas fa-times" style="color:var(--mt)"></i></button></div><form onsubmit="return hC(event)"><div class="mb-3"><label class="fl">Nome da Tarefa</label><input type="text" id="ft2" required placeholder="Ex: Implementar notificações" class="fi2"></div><div class="fr mb-3"><div><label class="fl">Tipo da Tarefa</label><select id="fty" required class="fi2">'+Object.entries(TT).map(([k,v])=>'<option value="'+k+'">'+v.l+'</option>').join('')+'</select></div><div><label class="fl">Prioridade</label><select id="fpr" required class="fi2"><option value="baixa">Baixa</option><option value="media" selected>Média</option><option value="alta">Alta</option></select></div></div><div class="mb-3"><label class="fl">Responsável pela Tarefa</label><select id="fas" required class="fi2">'+cl.map(u=>'<option value="'+u.id+'">'+u.nm+' — '+u.al+'</option>').join('')+'</select></div><div class="mb-3"><label class="fl">Duração da Tarefa</label><div class="dr"><div><label class="fl" style="font-size:10px">Início</label><input type="date" id="fsd" required value="'+ft(tm)+'" class="fi2" onchange="uCE()"></div><div><label class="fl" style="font-size:10px">Dias</label><input type="number" id="fdu" required min="1" max="365" value="10" class="fi2" style="text-align:center" oninput="uCE()"></div><div><label class="fl" style="font-size:10px">Término</label><div class="ce" id="fce">'+fD(cED(ft(tm),10))+'</div></div></div></div><div class="mb-3"><label class="fl">Status Inicial</label><select id="fst" class="fi2"><option value="nao-iniciado">Não Iniciado</option><option value="em-andamento">Em Andamento</option></select></div><div class="flex gap-2 pt-3" style="border-top:1px solid var(--bdr);padding-top:12px"><button type="submit" class="bp flex-1"><i class="fas fa-check mr-1"></i>Designar</button><button type="button" onclick="cM2()" class="bs flex-1">Cancelar</button></div></form></div>';m.style.display='flex'}
