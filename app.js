@@ -1,12 +1,12 @@
+/* ====== SUPABASE ====== */
+// As chaves ficam em js/config.js (fora do Git)
+if (!window.APP_CONFIG) {
+  document.body.innerHTML = '<p style="padding:20px;font-family:sans-serif">Arquivo js/config.js não encontrado. Copie js/config.example.js para js/config.js e preencha as chaves.</p>';
+  throw new Error('js/config.js ausente');
+}
+const sb = window.supabase.createClient(window.APP_CONFIG.SUPABASE_URL, window.APP_CONFIG.SUPABASE_KEY);
+
 /* ====== TEMAS ====== */
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm";
-
-const supabase = createClient(
-  "https://SEU-PROJECT-URL.supabase.co",
-  "SUA-PUBLISHABLE-KEY"
-);
-
-
 const TH={
 claro:{n:'Claro',v:{'--bg':'#f4f5f9','--bg2':'#fff','--crd':'#fff','--crd2':'#f0f1f5','--bdr':'#dde0e8','--fg':'#1a1d2b','--fg2':'#6b7490','--ac':'#d08a10','--ac2':'rgba(208,138,16,.12)','--ac3':'#b87808','--ok':'#16a34a','--ok2':'rgba(22,163,74,.1)','--nf':'#0ea5e9','--nf2':'rgba(14,165,233,.1)','--er':'#dc2626','--er2':'rgba(220,38,38,.1)','--wr':'#ca8a04','--mt':'#94a3b8','--mt2':'rgba(148,163,184,.1)','--gb':'rgba(255,255,255,.88)','--s1':'0 8px 30px rgba(0,0,0,.08)','--s2':'0 2px 8px rgba(0,0,0,.06)','--ib':'#f4f5f9','--af':'#fff'}},
 escuro:{n:'Escuro',v:{'--bg':'#0d1017','--bg2':'#131720','--crd':'#1a1f2e','--crd2':'#212740','--bdr':'#2a3048','--fg':'#e4e7ef','--fg2':'#8891a8','--ac':'#e8a020','--ac2':'rgba(232,160,32,.15)','--ac3':'#d08a10','--ok':'#34d399','--ok2':'rgba(52,211,153,.15)','--nf':'#38bdf8','--nf2':'rgba(56,189,248,.15)','--er':'#f87171','--er2':'rgba(248,113,113,.15)','--wr':'#fbbf24','--mt':'#6b7490','--mt2':'rgba(107,116,144,.15)','--gb':'rgba(26,31,46,.85)','--s1':'0 8px 30px rgba(0,0,0,.4)','--s2':'0 2px 8px rgba(0,0,0,.3)','--ib':'#131720','--af':'#0d1017'}},
@@ -53,159 +53,157 @@ function gV(){let f=iA()?[...TK]:TK.filter(t=>t.ai===cu.id);if(tf!=='todos')f=f.
 function tM(m,tp='success'){const c=document.getElementById('tk');const cl={success:'var(--ok)',error:'var(--er)',info:'var(--nf)',warning:'var(--wr)'};const ic={success:'fa-check-circle',error:'fa-times-circle',info:'fa-info-circle',warning:'fa-exclamation-triangle'};const e=document.createElement('div');e.className='ti';e.style.cssText='pointer-events:auto;display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:9px;background:var(--crd);border:1px solid var(--bdr);box-shadow:var(--s1);font-size:13px;min-width:260px;color:var(--fg);';e.innerHTML='<i class="fas '+ic[tp]+'" style="color:'+cl[tp]+'"></i><span>'+m+'</span>';c.appendChild(e);setTimeout(()=>{e.classList.add('rm');setTimeout(()=>e.remove(),200)},3000)}
 function pH(tk,sh){const p=cP(tk);const sm2=SM[tk.s];const od=iO(tk);let h='<div><div class="flex items-center gap-2" style="min-width:100px"><div class="flex-1 h-1.5 rounded-full" style="background:var(--bdr)"><div class="h-1.5 rounded-full" style="width:'+p+'%;background:'+(od?'var(--er)':sm2.c)+'"></div></div><span class="text-xs font-semibold" style="width:30px;color:'+(od?'var(--er)':'var(--fg2)')+'">'+p+'%</span></div>';if(sh&&od)h+='<div class="ow"><i class="fas fa-exclamation-circle"></i> Tarefa não concluída</div>';h+='</div>';return h}
 
-/* ====== LOGIN ====== */
-  function rL() {
-    const cl = gC();
-    document.getElementById('app').innerHTML = `
-      <div class="logbg h-screen flex items-center justify-center p-4 overflow-auto">
-        <div class="w-full max-w-md py-6">
-          <div class="text-center mb-6 su2">
-            <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4" 
-                style="background:var(--ac2);border:1px solid rgba(232,160,32,.3)">
-              <i class="fas fa-diagram-project text-xl" style="color:var(--ac)"></i>
-            </div>
-            <h1 class="text-3xl font-bold tracking-tight mb-2">GeTa</h1>
-            <p style="color:var(--fg2)">Gerenciador de tarefas</p>
+/* ====== LOGIN (tela) ====== */
+function rL() {
+  document.getElementById('app').innerHTML = `
+    <div class="logbg h-screen flex items-center justify-center p-4 overflow-auto">
+      <div class="w-full max-w-md py-6">
+        <div class="text-center mb-6 su2">
+          <div class="inline-flex items-center justify-center w-14 h-14 rounded-xl mb-4"
+               style="background:var(--ac2);border:1px solid rgba(232,160,32,.3)">
+            <i class="fas fa-diagram-project text-xl" style="color:var(--ac)"></i>
           </div>
+          <h1 class="text-3xl font-bold tracking-tight mb-2">GeTa</h1>
+          <p style="color:var(--fg2)">Gerenciador de tarefas</p>
+        </div>
 
-          <div class="gl rounded-xl p-5 su2" style="animation-delay:.1s">
-            <h2 class="font-semibold mb-4">Acesso ao sistema</h2>
-            <form onsubmit="event.preventDefault();fL()">
-              <input id="email" type="email" autocomplete="username" placeholder="seu@email.com"
-        class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
-        style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+        <div class="gl rounded-xl p-5 su2" style="animation-delay:.1s">
+          <h2 class="font-semibold mb-4">Acesso ao sistema</h2>
+          <form onsubmit="event.preventDefault();fL()">
+            <label class="text-xs font-medium block mb-1">E-mail</label>
+            <input id="le" type="email" autocomplete="username" placeholder="seu@email.com"
+                   class="w-full mb-3 px-3 py-2 rounded-lg text-sm"
+                   style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
 
+            <label class="text-xs font-medium block mb-1">Senha</label>
+            <input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"
+                   class="w-full mb-2 px-3 py-2 rounded-lg text-sm"
+                   style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
 
-              <label class="text-xs font-medium block mb-1">Senha</label>
-              <input id="lp" type="password" autocomplete="current-password" placeholder="Digite sua senha"
-                    class="w-full mb-2 px-3 py-2 rounded-lg text-sm"
-                    style="background:var(--bg2);border:1px solid var(--bdr);color:var(--fg)" required>
+            <div id="lemsg" class="text-xs mb-3" style="display:none;color:var(--er)">
+              Sua senha ou login estão incorretos
+            </div>
 
-              <div id="lemsg" class="text-xs mb-3" style="display:none;color:var(--er)">
-                Sua senha ou login estão incorretos
-              </div>
-
-              <div class="text-right mb-4">
-                <button type="button" onclick="fS()" class="text-xs" style="color:var(--ac)">
-                  Esqueceu a senha?
-                </button>
-              </div>
-
-              <button type="submit" class="bp w-full py-2.5 rounded-lg font-semibold text-sm">
-                Entrar
+            <div class="text-right mb-4">
+              <button type="button" onclick="fS()" class="text-xs" style="color:var(--ac)">
+                Esqueceu a senha?
               </button>
-            </form>
-
-            <div class="flex items-center gap-3 my-4">
-              <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
-              <span class="text-xs" style="color:var(--mt)">ou</span>
-              <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
             </div>
 
-            <button type="button" onclick="gL()" 
-                    class="w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2"
-                    style="background:var(--crd);border:1px solid var(--bdr)">
-              <i class="fab fa-google" style="color:#4285f4"></i> Entrar com Google (Gmail)
+            <button id="lbtn" type="submit" class="bp w-full py-2.5 rounded-lg font-semibold text-sm">
+              Entrar
             </button>
+          </form>
+
+          <div class="flex items-center gap-3 my-4">
+            <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
+            <span class="text-xs" style="color:var(--mt)">ou</span>
+            <div class="flex-1" style="height:1px;background:var(--bdr)"></div>
           </div>
+
+          <button type="button" onclick="gL()"
+                  class="w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2"
+                  style="background:var(--crd);border:1px solid var(--bdr)">
+            <i class="fab fa-google" style="color:#4285f4"></i> Entrar com Google (Gmail)
+          </button>
         </div>
       </div>
-    `;
-  }
-  import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+    </div>
+  `;
+}
 
-// Inicializa o cliente Supabase com suas credenciais reais
-const supabase = createClient(
-  "https://iyrjxkiaippfouilapdb.supabase.co",   // coloque seu SUPABASE_URL
-  "b_publishable_AjyVwE-ZMvUJBzRvphFepQ_2F_X95q6"                    // coloque seu SUPABASE_KEY
-);
-
+/* ====== LOGIN (Supabase) ====== */
 async function fL() {
   const email = document.getElementById('le').value.trim().toLowerCase();
   const password = document.getElementById('lp').value;
   const m = document.getElementById('lemsg');
+  const btn = document.getElementById('lbtn');
 
-  // Autenticação real via Supabase
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password
-  });
+  btn.disabled = true;
+  btn.textContent = 'Entrando...';
+
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
 
   if (error) {
-    // Mostra mensagem de erro
     m.style.display = 'block';
-  } else {
-    // Esconde mensagem de erro e chama sua função de redirecionamento
-    m.style.display = 'none';
-    sR(data.user.id); 
+    btn.disabled = false;
+    btn.textContent = 'Entrar';
+    return;
   }
+
+  m.style.display = 'none';
+  await sR(data.user);
 }
+
 async function fS() {
-  const email = document.getElementById('le').value.trim().toLowerCase();
+  const el = document.getElementById('le');
+  const email = el ? el.value.trim().toLowerCase() : '';
 
   if (!email) {
     tM('Digite seu e-mail para recuperar a senha.', 'info');
     return;
   }
 
-  const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-    redirectTo: "https://SEU-SITE.com/reset" // URL para onde o usuário será redirecionado após redefinir
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + window.location.pathname
   });
 
-  if (error) {
-    tM('Erro ao enviar link de recuperação: ' + error.message, 'info');
-  } else {
-    tM('Um link de recuperação foi enviado para seu e-mail.', 'info');
-  }
+  if (error) tM('Erro ao enviar link: ' + error.message, 'error');
+  else tM('Link de recuperação enviado para seu e-mail.', 'success');
 }
+
 async function gL() {
-  const { data, error } = await supabase.auth.signInWithOAuth({
+  const { error } = await sb.auth.signInWithOAuth({
     provider: 'google',
-    options: {
-      redirectTo: "https://SEU-SITE.com/dashboard" // URL para onde o usuário será redirecionado após login
-    }
+    options: { redirectTo: window.location.origin + window.location.pathname }
   });
 
-  if (error) {
-    tM('Erro ao tentar login com Google: ' + error.message, 'info');
-  } else {
-    tM('Redirecionando para login com Google...', 'info');
-  }
+  if (error) tM('Erro no login com Google: ' + error.message, 'error');
 }
 
-function sR(userId) {
-  // Busca os dados do usuário autenticado no Supabase
-  const user = supabase.auth.getUser().then(({ data, error }) => {
-    if (error) {
-      tM('Erro ao recuperar dados do usuário: ' + error.message, 'info');
-      return;
-    }
+// Busca o perfil na tabela "profiles" e monta o objeto "cu" usado pelo sistema
+async function sR(user) {
+  const { data: p, error } = await sb
+    .from('profiles')
+    .select('*')
+    .eq('id', user.id)
+    .single();
 
-    // Aqui você pode salvar os dados do usuário em variáveis globais
-    cu = {
-      id: userId,
-      nm: data.user.email // ou outro campo que você queira exibir
-    };
+  if (error || !p) {
+    await sb.auth.signOut();
+    cu = null;
+    rL();
+    tM('Perfil não encontrado. Contate o administrador.', 'error');
+    return;
+  }
 
-    // Configurações de navegação
-    cv = 'dashboard';
-    tf = 'todos';
-    sq = '';
+  cu = {
+    id: p.id,
+    nm: p.nome,
+    rl: p.papel,              // 'admin' ou 'col'
+    in: gI(p.nome),
+    co: p.cor || '#38bdf8',
+    em: user.email,
+    ph: p.telefone || '',
+    al: p.nivel || 'Analista'
+  };
 
-    // Renderiza a aplicação
-    rA();
-    
+  cv = 'dashboard'; tf = 'todos'; sq = '';
+  rA();
+  tM('Bem-vindo(a), ' + cu.nm + '!', 'success');
+}
 
-    // Mensagem de boas-vindas
-    tM('Bem-vindo(a), ' + cu.nm + '!', 'success');
-  });
+async function lo() {
+  await sb.auth.signOut();
+  cu = null;
+  rL();
 }
 
 /* ====== APP ====== */
 function rA(){const ap=document.getElementById('app');const ad=iA();const od=gO();const oc=od.length;const nv=[{id:'dashboard',ic:'fa-th-large',lb:'Painel'},{id:'tasks',ic:'fa-list-check',lb:'Tarefas'},...(ad?[{id:'team',ic:'fa-users',lb:'Equipe'}]:[]),{id:'gantt',ic:'fa-timeline',lb:'Gantt'}];const thH=Object.entries(TH).map(([id,t])=>'<button class="tb2 '+(cTH===id?'on':'')+' t'+(id==='claro'?'c':id==='escuro'?'e':'d')+'" data-t="'+id+'" onclick="apTH(\''+id+'\')" title="'+t.n+'"><div></div></button>').join('');const thL='<div class="tlb flex items-center gap-1 mt-1">'+Object.entries(TH).map(([id])=>'<span class="text-center flex-1" style="font-size:9px;color:'+(cTH===id?'var(--ac)':'var(--mt)')+';font-weight:'+(cTH===id?'600':'400')+'">'+TH[id].n+'</span>').join('')+'</div>';const ndH=ad&&oc>0?'<div class="ndd" id="ndd" style="display:'+(nop?'block':'none')+'"><div class="px-3 py-2" style="border-bottom:1px solid var(--bdr)"><div class="flex items-center gap-2"><i class="fas fa-exclamation-circle" style="color:var(--er)"></i><span class="font-semibold text-sm">'+oc+' tarefa'+(oc>1?'s':'')+' vencida'+(oc>1?'s':'')+'</span></div><div class="text-xs mt-1" style="color:var(--fg2)">Edite as datas para liberar</div></div><div style="max-height:260px;overflow:auto">'+od.map(t=>{const a=gU(t.ai);return'<div class="flex items-center gap-2 px-3 py-2 cursor-pointer" onclick="nop=false;rA();oEM('+t.id+')" style="border-bottom:1px solid var(--bdr)"><div class="flex-1 min-w-0"><div class="text-sm font-medium truncate">'+t.t+'</div><div class="text-xs" style="color:var(--fg2)">'+(a?a.nm:'—')+' · '+t.du+'d · Prazo: '+fD(t.ed)+'</div></div><button class="bp" style="padding:3px 8px;font-size:10px">Editar</button></div>'}).join('')+'</div></div>':'';ap.innerHTML='<div class="flex h-screen"><aside id="sb" class="flex flex-col '+(sc2?'cc':'')+'"><button class="tbt" onclick="tSB()" title="'+(sc2?'Expandir':'Recolher')+'"><i class="fas fa-chevron-left"></i></button><div class="flex items-center px-3 py-3" style="min-height:50px"><div class="flex items-center justify-center w-8 h-8 rounded-lg flex-shrink-0" style="background:var(--ac2)"><i class="fas fa-diagram-project" style="color:var(--ac);font-size:13px"></i></div><span class="sb2 text-sm font-bold ml-2">TaskFlow</span></div><nav class="flex-1 px-2 mt-1">'+nv.map(n=>'<div class="relative mb-0.5"><button onclick="sV(\''+n.id+'\')" class="ni '+(cv===n.id?'ac2':'')+' w-full flex items-center px-3 py-2 text-sm" style="color:'+(cv===n.id?'var(--ac)':'var(--fg2)')+'"><i class="fas '+n.ic+' w-5 text-center flex-shrink-0" style="font-size:13px"></i><span class="st ml-2">'+n.lb+'</span></button></div>').join('')+'</nav><div class="px-3 py-2" style="border-top:1px solid var(--bdr)"><div class="flex items-center gap-1 justify-center">'+thH+'</div>'+thL+'</div><div class="px-2 py-2" style="border-top:1px solid var(--bdr)"><div class="flex items-center"><div class="av flex-shrink-0" style="background:'+cu.co+';color:var(--af)">'+cu.in+'</div><div class="su flex-1 min-w-0 ml-2"><div class="text-xs font-medium truncate">'+cu.nm+'</div><div class="text-xs" style="color:var(--mt)">'+(ad?'Admin':'Colaborador')+'</div></div><button onclick="lo()" class="p-1.5 rounded hover:bg-white/5 flex-shrink-0" title="Sair do sistema"><i class="fas fa-sign-out-alt" style="color:var(--er);font-size:12px"></i></button></div></div></aside><div class="flex-1 flex flex-col min-w-0"><header class="flex items-center justify-between px-5 py-3" style="border-bottom:1px solid var(--bdr);background:var(--bg2)"><div><h1 class="text-lg font-bold" id="vt"></h1><p class="text-xs mt-0.5" style="color:var(--fg2)" id="vs"></p></div><div class="flex items-center gap-2"><div class="relative"><i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-xs" style="color:var(--mt)"></i><input type="text" placeholder="Buscar..." class="pl-8 pr-3 py-1.5 text-xs w-40" style="background:var(--crd)" oninput="sq=this.value;rV()"></div>'+(ad&&oc>0?'<div class="relative"><button class="nb p-1.5 rounded-lg hover:bg-white/5" onclick="tN()"><i class="fas fa-bell" style="color:var(--er);font-size:15px"></i><span class="nbd">'+oc+'</span></button>'+ndH+'</div>':'')+(ad?'<button onclick="oCM()" class="bp flex items-center gap-1 text-xs"><i class="fas fa-plus" style="font-size:10px"></i> Nova</button>':'')+'</div></header><main id="mc" class="flex-1 overflow-auto p-5" style="background:var(--bg)"></main></div></div><div id="mbd" class="fixed inset-0 z-40 mo flex items-center justify-center p-4" style="display:none" onclick="if(event.target===this)cM2()"><div id="mbo" class="mc gl rounded-xl w-full max-w-lg max-h-[90vh] overflow-auto"></div></div>';rV()}
 function tSB(){sc2=!sc2;const s=document.getElementById('sb');if(s)s.classList.toggle('cc',sc2)}
 function tN(){nop=!nop;const d=document.getElementById('ndd');if(d)d.style.display=nop?'block':'none'}
-function sV(v){cv=v;tf='todos';rA()}function lo(){cu=null;rL()}
+function sV(v){cv=v;tf='todos';rA()}
 function rV(){const t=document.getElementById('vt'),s=document.getElementById('vs'),c=document.getElementById('mc'),a=iA();const tl={dashboard:['Painel',a?'Visão geral de todas as tarefas':'Visão geral das suas tarefas'],tasks:['Tarefas',a?'Designar e gerenciar tarefas':'Suas tarefas'],gantt:['Gantt','Visualização temporal'],team:['Equipe','Gerenciar membros']};t.textContent=tl[cv]?.[0]||'';s.textContent=tl[cv]?.[1]||'';({dashboard:rD,tasks:rT,gantt:rG,team:rE}[cv]||rD)(c)}
 
 /* ====== DASHBOARD ====== */
@@ -384,4 +382,21 @@ function oDM(id){const t=TK.find(x=>x.id===id);if(!t)return;const a=gU(t.ai);con
 function cM2(){document.getElementById('mbd').style.display='none'}
 
 /* ====== INIT ====== */
-apTH(cTH);rL();
+apTH(cTH);
+
+// Redefinição de senha: o link do e-mail traz o usuário de volta com uma sessão temporária
+sb.auth.onAuthStateChange(async (evento) => {
+  if (evento === 'PASSWORD_RECOVERY') {
+    const nova = prompt('Digite sua nova senha (mínimo 6 caracteres):');
+    if (nova && nova.length >= 6) {
+      const { error } = await sb.auth.updateUser({ password: nova });
+      tM(error ? 'Erro ao trocar a senha: ' + error.message : 'Senha alterada com sucesso.', error ? 'error' : 'success');
+    }
+  }
+});
+
+// Mantém a sessão ao recarregar a página e ao voltar do login com Google
+sb.auth.getSession().then(({ data: { session } }) => {
+  if (session) sR(session.user);
+  else rL();
+});
